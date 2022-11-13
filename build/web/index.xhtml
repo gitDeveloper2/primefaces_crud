@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+        <h:form>
+            <p:outputLabel value="New Person"></p:outputLabel>
+            <br/>
+            <p:outputLabel value="Input Name"></p:outputLabel>
+            
+            <p:inputText value="#{personController.name}"></p:inputText>
+            <p:commandButton action="#{personController.create()}" value="Submit"></p:commandButton>
+        </h:form>
+        <br/>
+        <p:outputLabel value="Available People"></p:outputLabel>
+        <p:dataTable var="data" value="#{personController.persons}" >
+             <p:column headerText="User ID">
+                 <h:outputText value="#{data.id}"/>
+                 
+            </p:column>
+            <p:column headerText="User Name">
+                <h:outputText value="#{data.name}"/>
+            </p:column>
+        
+            <p:column headerText="Action">
+                <h:form>
+                    <p:commandButton value="edit" action="#{personController.edit()}">
+                    <f:param name="edit1" value="#{data.id}"></f:param>
+                    </p:commandButton>
+                </h:form>
+            </p:column>
+            
+            <p:column headerText="Action">
+            <h:form>
+                <p:commandButton value="Delete" action="#{personController.delete()}">
+                <f:param name="delete" value="#{data.id}"></f:param>
+            </p:commandButton>
+             </h:form>
+            </p:column>
+        
+        </p:dataTable>
+        </center>
+    </h:body>
+</html>
+
