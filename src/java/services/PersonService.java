@@ -30,7 +30,7 @@ import utils.MyDB_Connection;
 public class PersonService  {
 private  MyDB_Connection db=new MyDB_Connection();
  Connection con=null;
- public List<Person> getPersons(){
+ public List<Person> getPersons() throws SQLException{
           List<Person> persons;
           
          
@@ -48,13 +48,15 @@ private  MyDB_Connection db=new MyDB_Connection();
                 persons.add(p);
             }
             return persons;
-        
+            
         } catch (SQLException ex) {
            System.out.print(ex);
-        }
+        }finally{
+             con.close();
+         }
       return null;
     }
-public void create(Person person){
+public void create(Person person) throws SQLException{
     MyDB_Connection db=new MyDB_Connection();
     Connection con=null;
     try{
@@ -65,10 +67,12 @@ public void create(Person person){
         ps.execute();
     }catch(SQLException e){
         System.out.println(e);
-    }
+    }finally{
+             con.close();
+         }
 }
 
-    public Person get(int id) {
+    public Person get(int id) throws SQLException {
     Person p=new Person();
     try {
         
@@ -86,11 +90,13 @@ public void create(Person person){
     } catch (SQLException ex) {
         System.out.println(ex);
         
-    }
+    }finally{
+             con.close();
+         }
         return p;
     }
 
-    public void update(Person p) {
+    public void update(Person p) throws SQLException {
     try {
          
         con=db.getConnection();
@@ -102,11 +108,13 @@ public void create(Person person){
          System.out.println(p);
     } catch (SQLException ex) {
         System.out.println(ex);
-    }
+    }finally{
+             con.close();
+         }
     
     }
 
-    public void delete(int id) {
+    public void delete(int id) throws SQLException {
         
     try {
        
@@ -118,6 +126,9 @@ public void create(Person person){
         
     } catch (SQLException ex) {
         System.out.println(ex);    }
+    finally{
+             con.close();
+         }
         
     }
 

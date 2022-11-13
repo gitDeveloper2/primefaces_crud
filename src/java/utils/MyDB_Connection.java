@@ -18,9 +18,6 @@ public class MyDB_Connection {
      }catch(Exception e){
          System.out.print(e);
      }
-//     finally{
-//         conn.close();
-//     }
        return null; 
  }
 }
