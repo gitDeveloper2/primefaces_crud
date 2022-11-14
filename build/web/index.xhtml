@@ -9,32 +9,54 @@
     </h:head>
     <h:body>
         <center>
-        <h:form>
-            <p:outputLabel value="New Person"></p:outputLabel>
-            <br/>
+
+<p:commandButton value="ADD" type="button" onclick="PF('dlgAdd').show();" /> 
+
+ 
+                    <p:dialog header="New User" widgetVar="dlgAdd" modal="true" height="100">
+    <h:outputText value="Input New User" />
+            <h:form>
+            
             <p:outputLabel value="Input Name"></p:outputLabel>
             
             <p:inputText value="#{personController.name}"></p:inputText>
             <p:commandButton action="#{personController.create()}" value="Submit"></p:commandButton>
         </h:form>
+</p:dialog>   
+ 
         <br/>
         <p:outputLabel value="Available People"></p:outputLabel>
         <p:dataTable var="data" value="#{personController.persons}" >
-             <p:column headerText="User ID">
-                 <h:outputText value="#{data.id}"/>
-                 
-            </p:column>
-            <p:column headerText="User Name">
-                <h:outputText value="#{data.name}"/>
-            </p:column>
+                        <p:column headerText="User ID">
+                            <h:outputText value="#{data.id}"/>
+
+                       </p:column>
+            
+            
+                        <p:column headerText="User Name">
+                            <h:outputText value="#{data.name}"/>
+                        </p:column>
         
             <p:column headerText="Action">
                 <h:form>
-                    <p:commandButton value="edit" action="#{personController.edit()}">
-                    <f:param name="edit1" value="#{data.id}"></f:param>
+                    <p:commandButton value="Edit" type="button" onclick="PF('dlgUpdate').show();" action="#{personController.edit()}">
+                     <f:param name="edit1" value="#{data.id}"></f:param>   
                     </p:commandButton>
-                </h:form>
-            </p:column>
+               </h:form>
+             <p:dialog header="Edit User" widgetVar="dlgUpdate" modal="true" height="100">
+                 <center>
+                             <p:outputLabel value=" Insert To Edit User"></p:outputLabel>
+            <br/><br/>
+                        
+
+        <h:form>
+            <p:outputLabel value="Edit Name"></p:outputLabel>
+            <p:inputText value="#{data.name}"></p:inputText>
+            <p:commandButton action="#{personController.update(data)}" value="Submit"></p:commandButton>
+        </h:form>
+            </center>
+                </p:dialog>  
+           </p:column>
             
             <p:column headerText="Action">
             <h:form>
@@ -43,8 +65,62 @@
             </p:commandButton>
              </h:form>
             </p:column>
-        
+            
         </p:dataTable>
+        <br/>
+        <p:outputLabel value="Table 2"></p:outputLabel>
+        <h:form>
+            <p:dataTable var="data" value="#{personController.persons}" editable="true">
+                        <p:column headerText="User ID">
+                            <h:outputText value="#{data.id}"/>
+
+                       </p:column>
+            
+            
+                        <p:column headerText="User Name">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{data.name}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText  value="#{data.name}"></p:inputText>
+                                </f:facet>
+                            
+                            </p:cellEditor>
+                        </p:column>
+        
+            <p:column headerText="Action">
+                
+                <h:form>
+                    <p:commandButton value="Edit" type="button" onclick="PF('dlgUpdate').show();" action="#{personController.edit()}">
+                     <f:param name="edit1" value="#{data.id}"></f:param>   
+                    </p:commandButton>
+               </h:form>
+             <p:dialog header="Edit User" widgetVar="dlgUpdate" modal="true" height="100">
+                 <center>
+                             <p:outputLabel value=" Insert To Edit User"></p:outputLabel>
+            <br/><br/>
+        <h:form>
+            <p:outputLabel value="Edit Name"></p:outputLabel>
+            <p:inputText value="#{data.name}"></p:inputText>
+            <p:commandButton action="#{personController.update(data)}" value="Submit"></p:commandButton>
+        </h:form>
+            </center>
+                </p:dialog>  
+           </p:column>
+            
+            <p:column headerText="Action">
+            <h:form>
+                <p:commandButton value="Delete" action="#{personController.delete()}">
+                <f:param name="delete" value="#{data.id}"></f:param>
+            </p:commandButton>
+             </h:form>
+            </p:column>
+              <p:column style="width:6rem">
+                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+            </p:column>
+        </p:dataTable>
+        </h:form>
         </center>
     </h:body>
 </html>
