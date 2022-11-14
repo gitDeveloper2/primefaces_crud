@@ -12,12 +12,17 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 
 import javax.enterprise.inject.spi.Bean;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+
 import services.PersonService;
 
 /**
@@ -27,6 +32,8 @@ import services.PersonService;
 //@Named
 //@SessionScoped
 @ManagedBean
+@ViewScoped
+
 public class PersonController implements Serializable{
     private int id;
     private String name;
@@ -129,10 +136,39 @@ persons=personService.getPersons();
            sessionMap.put("editedperson", p);
         return "/index.xhtml?faces-redirect=true";
     }
+//
+//    public void onRowEdit(RowEditEvent event) {
+//  FacesMessage msg = new FacesMessage("Car Edited", event.g);
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
+//     
+//    public void onRowCancel(RowEditEvent event) {
+//       FacesMessage msg = new FacesMessage("Edit Cancelled", event.getObject().getId());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
+//    
+//public void onCellEdit(CellEditEvent event){
+//     System.out.println("eafeadjkdfjdsakfkdnk");
+//    Object oldValue=event.getOldValue();
+//    Object newValue =event.getNewValue();
+//    
+//    if(newValue!=null && !newValue.equals(oldValue)){
+//        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
+//}
+        public void onRowEdit(RowEditEvent event) throws SQLException {
+        FacesMessage msg = new FacesMessage("Car Edited", event.getObject().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        personService.update((Person) event.getObject());
+        
+    }
+     
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", "Cancelled");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
 
-
-   
-    
     
 }

@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import models.Person;
 import utils.MyDB_Connection;
@@ -26,7 +27,7 @@ import utils.MyDB_Connection;
 //@ApplicationScoped
 
 @ManagedBean(name = "personservice")
-@ApplicationScoped
+@ViewScoped
 public class PersonService  {
 private  MyDB_Connection db=new MyDB_Connection();
  Connection con=null;
